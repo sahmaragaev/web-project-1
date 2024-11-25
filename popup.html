@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div id="profile-data">
+      <h2>Profile Manager</h2>
+      <input
+        type="text"
+        id="usernameInput"
+        placeholder="Enter Username (required)"
+      />
+      <input type="text" id="name" placeholder="Name" />
+      <input type="text" id="jobTitle" placeholder="Job Title" />
+      <textarea id="education" placeholder="Education (JSON array)"></textarea>
+      <textarea id="skills" placeholder="Skills (JSON array)"></textarea>
+      <button id="scrapeButton">Scrape LinkedIn Data</button>
+      <button id="saveButton">Save Profile</button>
+      <button id="loadButton">Load Profile</button>
+      <button id="generateCoverLetterButton">Generate Cover Letter</button>
+      <button id="clearButton">Clear Profile</button>
+      <br />
+      <button id="exportDataButton">Export Data as JSON</button>
+      <button id="sendDataButton">Send Data via Email</button>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
