@@ -1,0 +1,11 @@
+{
+  "name": "web-project-1",
+  "version": "1.0.0",
+  "description": "A Chrome extension",
+  "main": "background.js",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
