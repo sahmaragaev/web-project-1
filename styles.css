@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  div {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(38, 28, 226, 0.69);
+    max-width: 400px;
+    width: 100%;
+  }
+  div :hover{
+    box-shadow: 0 5px 7px rgba(38, 28, 226, 0.69);
+  }
+  
+  div h2 {
+    text-align: center;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+
+
+  /* Input Fields */
+  div input,
+  div textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  div textarea {
+    resize: vertical;
+    height: 80px;
+  }
+  
+  /* Buttons */
+  div button {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    margin: 3px 0;
+    font-size: 1rem;
+    background: #6cbcca;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  div button:hover {
+    background: #1f5962;
+    color: #fff;
+  }
+  
+  /* Export and Send Data Buttons */
+  #profile-data button#exportDataButton,
+  #profile-data button#sendDataButton {
+    background: #57b5c6;
+  }
+  
+  #profile-data button#exportDataButton:hover,
+  #profile-data button#sendDataButton:hover {
+    background: #1e7a33;
+  }
+  
+  /* Clear Button */
+  #profile-data button#clearButton {
+    background: #dc3545;
+  }
+  
+  #profile-data button#clearButton:hover {
+    background: #ff001a;
+  }
+  
