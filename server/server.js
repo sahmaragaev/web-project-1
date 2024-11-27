@@ -1,20 +1,40 @@
 import express from "express";
 import cors from "cors";
-import LinkedInClient from "./client.js";
+import ClientManager from "./client_manager.js";
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors({ origin: "http://127.0.0.1:5500" }));
-
 app.use(express.json());
 
-app.post("/api/login", async (req, res) => {
-    const { email, password } = req.body;
-    try {
-        const client = new LinkedInClient({ email, password, debug: true });
+let email = null;
+let password = null;
 
+app.get("/api/auth-status", async (req, res) => {
+    try {
+        if (!email || !password) {
+            return res.status(401).json({ authenticated: false, message: "Not logged in." });
+        }
+
+        const client = await linkedInClientManager.getClient({ email, password });
         await client.ensureAuthenticated();
+
+        res.json({ authenticated: true });
+    } catch (error) {
+        console.error("Error checking auth status:", error.message);
+        res.status(500).json({ authenticated: false, error: error.message });
+    }
+});
+
+
+app.post("/api/login", async (req, res) => {
+    try {
+        const { email: reqEmail, password: reqPassword } = req.body;
+        email = reqEmail;
+        password = reqPassword;
+
+        const client = await linkedInClientManager.getClient({ email, password });
 
         res.json({ message: "Login successful", cookies: client.cookies });
     } catch (error) {
@@ -26,10 +46,13 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/profile/:publicId", async (req, res) => {
     const publicId = req.params.publicId;
-    const { email, password } = req.query;
-    try {
-        const client = new LinkedInClient({ email, password, debug: true });
 
+    try {
+        if (!email || !password) {
+            throw new Error("User is not logged in. Please log in first.");
+        }
+
+        const client = await linkedInClientManager.getClient({ email, password });
         const profile = await client.getProfile(publicId);
         res.json(profile);
     } catch (error) {
@@ -38,6 +61,7 @@ app.get("/api/profile/:publicId", async (req, res) => {
     }
 });
 
+// Start Server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 });

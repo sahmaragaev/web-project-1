@@ -11,6 +11,26 @@
       <button id="log-in-button">Log in</button>
     </div>
     <script>
+      async function checkAuth() {
+        try {
+          const response = await fetch("http://localhost:3000/api/auth-status");
+
+          if (response.ok) {
+            const result = await response.json();
+
+            if (result.authenticated) {
+              window.location.href = "popup.html";
+            }
+          } else {
+            console.log("Not authenticated. Staying on the login page.");
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error.message);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", checkAuth);
+
       document
         .getElementById("log-in-button")
         .addEventListener("click", async () => {
@@ -32,7 +52,9 @@
               alert("Login successful!");
               window.location.href = "popup.html";
             } else {
-              throw new Error(result.error || "Login failed. Please try again.");
+              throw new Error(
+                result.error || "Login failed. Please try again."
+              );
             }
           } catch (error) {
             console.error("Error:", error.message);
