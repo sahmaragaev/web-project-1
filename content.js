@@ -1,42 +1,73 @@
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     if (request.action === "extractData") {
         try {
-            const nameElement = document.querySelector('h1.inline.t-24.v-align-middle.break-words');
-            const name = nameElement ? nameElement.innerText.trim() : null;
+            const username = request.username;
+            if (!username) {
+                throw new Error("Username is required but not provided.");
+            }
 
-            const jobTitleElement = document.querySelector('.text-body-medium.break-words');
-            const jobTitle = jobTitleElement ? jobTitleElement.innerHTML.trim() : null;
-
-            let education = [];
-            const educationElements = document.querySelectorAll('.pvs-entity.pvs-entity--padded');
-            educationElements.forEach((eduElement) => {
-                const institution = eduElement.querySelector('.t-bold span')?.innerText?.trim();
-                const degree = eduElement.querySelector('.t-14 span')?.innerText?.trim();
-                if (institution) {
-                    education.push({ institution, degree });
+            const response = await fetch(`http://localhost:3000/api/profile/${username}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
                 }
             });
 
-            let skills = [];
-            const skillsElements = document.querySelectorAll('.pv-skill-category-entity__name-text');
-            skillsElements.forEach((skillElement) => {
-                const skillName = skillElement.innerText.trim();
-                if (skillName) {
-                    skills.push(skillName);
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            const profile = data.profile;
+            const name = `${profile.miniProfile.firstName} ${profile.miniProfile.lastName}`;
+            const currentJobTitle = profile.miniProfile.occupation;
+
+            const experiences = data.positionView.elements.map(position => {
+                const companyName = position.companyName;
+                const startDate = position.timePeriod.startDate;
+                const endDate = position.timePeriod.endDate || "Present";
+
+                let duration = "Unknown";
+                if (startDate && endDate !== "Present") {
+                    const start = new Date(startDate.year, startDate.month - 1);
+                    const end = new Date(endDate.year, endDate.month - 1);
+                    const diff = new Date(end - start);
+                    duration = `${diff.getUTCFullYear() - 1970} years, ${diff.getUTCMonth()} months`;
                 }
+
+                return {
+                    companyName,
+                    startDate: `${startDate.month}/${startDate.year}`,
+                    endDate: endDate === "Present" ? "Present" : `${endDate.month}/${endDate.year}`,
+                    duration
+                };
             });
 
-            const data = {
+            const education = data.educationView.elements.map(edu => {
+                const schoolName = edu.schoolName;
+                const degree = edu.degreeName || "No degree specified";
+                const fieldOfStudy = edu.fieldOfStudy || "No field specified";
+                return { schoolName, degree, fieldOfStudy };
+            });
+
+            const skills = data.skillView.elements.map(skill => skill.name);
+
+            const parsedData = {
                 name,
-                jobTitle,
+                currentJobTitle,
+                experiences,
                 education,
-                skills,
+                skills
             };
 
-            sendResponse({ success: true, data });
+            sendResponse({ success: true, data: parsedData });
         } catch (error) {
-            console.error('Error extracting data:', error);
-            sendResponse({ success: false, error: error.message });
+            console.error("Error extracting data:", error);
+            sendResponse({
+                success: false,
+                error: error.message || "There was an issue on the server"
+            });
         }
     } else if (request.action === "generateCoverLetter") {
         try {
