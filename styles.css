@@ -1,4 +1,4 @@
-/* General Reset */
+
 body, h1, h2, p, ul, li, a, button {
   margin: 0;
   padding: 0;
@@ -6,37 +6,34 @@ body, h1, h2, p, ul, li, a, button {
   box-sizing: border-box;
 }
 
-/* h2 Styling */
 h2 {
-  color: #e0e0e0; /* Light Gray for Dark Mode */
+  color: #e0e0e0; 
   text-align: center;
-  transition: color 0.3s ease; /* Smooth transition for color */
+  transition: color 0.3s ease; 
 }
 
 h2:hover {
-  color: #4caf50; /* Green on Hover */
+  color: #4caf50; 
 }
 
 /* Page Background */
 body {
-  background-color: #121212; /* Dark Mode Background */
-  color: #e0e0e0; /* Light text for readability */
+  background-color: #121212; 
+  color: #e0e0e0;
 }
 
-/* Container Styling with Background Image */
 #profile-data {
   max-width: 600px;
   padding: 20px;
   background: url('https://img.freepik.com/premium-photo/pastel-tone-black-green-purple-gradient-defocused-abstract-photo-color-background_640734-12.jpg?w=900') no-repeat center center; /* Provided image URL */
-  background-size: cover; /* Ensures the image covers the container */
+  background-size: cover; 
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); /* Slightly stronger shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); 
   margin: 20px auto;
-  position: relative; /* Allows overlaying effects */
-  color: white; /* Text color for better readability */
+  position: relative; 
+  color: white; 
 }
 
-/* Background Overlay */
 #profile-data::before {
   content: '';
   position: absolute;
@@ -44,85 +41,77 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+  background: rgba(0, 0, 0, 0.5); 
   border-radius: 10px;
-  z-index: 0; /* Places overlay behind text */
+  z-index: 0; 
 }
 
-/* Content Styling for Profile Data */
 #profile-data * {
   position: relative;
-  z-index: 1; /* Ensures content is above the overlay */
-}
+  z-index: 1; 
 
-/* Form Fields */
 input.fields,
 textarea {
   border-radius: 5px;
-  border: 1px solid #444; /* Dark border for form fields */
+  border: 1px solid #444; 
   padding: 10px;
   margin-bottom: 15px;
-  width: 100%; /* Full width for form elements */
-  background: #1c1c1c; /* Dark field background */
-  color: #e0e0e0; /* Light text */
-  transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition for hover/fill effects */
+  width: 100%; 
+  background: #1c1c1c; 
+  color: #e0e0e0; 
+  transition: border-color 0.3s ease, background-color 0.3s ease; 
 }
 
-/* Form Field Hover Effects */
 input.fields:hover,
 textarea:hover {
-  border-color: #4caf50; /* Green border on Hover */
-  background-color: #292929; /* Slightly lighter background on hover */
+  border-color: #4caf50; 
+  background-color: #292929; 
 }
 
-/* Form Field Ready State */
 input.fields:valid,
 textarea:valid {
-  border-color: #4caf50; /* Green border to indicate readiness */
+  border-color: #4caf50; 
 }
 
 input.fields:focus,
 textarea:focus {
   outline: none;
-  border-color: #2196f3; /* Blue border for active field */
+  border-color: #2196f3; 
 }
 
-/* General Button Styling */
 .btn-icon {
   border: none;
-  font-size: 1.5em; /* Larger icons for visibility */
+  font-size: 1.5em; 
   margin: 0 10px;
   cursor: pointer;
-  position: relative; /* Required for positioning tooltips */
+  position: relative; 
   padding: 10px;
   border-radius: 5px;
-  background-color: #1c1c1c; /* Dark button background */
-  color: #e0e0e0; /* Light icon color */
+  background-color: #1c1c1c; 
+  color: #e0e0e0; 
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Icon Filter for Dark Mode */
 .btn-icon i {
-  filter: invert(100%); /* Inverts icon colors for dark mode */
+  filter: invert(100%); 
 }
 
 /* Button Hover Effects */
 .btn-icon:hover {
-  background-color: #292929; /* Slightly lighter on hover */
-  color: #4caf50; /* Green text/icon color on hover */
-  transform: scale(1.1); /* Slight zoom effect */
+  background-color: #292929; 
+  color: #4caf50;
+  transform: scale(1.1); 
 }
 
-/* Tooltip Styling */
 .btn-icon[title]::after {
   content: attr(title);
   position: absolute;
-  top: -25px; /* Position above the button */
+  top: -25px; 
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.8);
   color: white;
-  font-size: 0.65em; /* Smaller tooltip text */
+  font-size: 0.65em; 
   padding: 4px 6px;
   border-radius: 3px;
   white-space: nowrap;
@@ -131,53 +120,49 @@ textarea:focus {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Tooltip Visibility on Hover */
 .btn-icon:hover::after {
   opacity: 1;
-  transform: translateX(-50%) translateY(-3px); /* Slight lift effect */
+  transform: translateX(-50%) translateY(-3px); 
 }
 
-/* Add spacing between button rows */
 .d-flex {
-  margin-bottom: 30px; /* Add spacing between rows */
+  margin-bottom: 30px; 
 }
 
 
 #log-in {
   max-width: 400px;
   padding: 20px;
-  background: #1c1c1c; /* Dark container background */
+  background: #1c1c1c; 
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); /* Slight shadow */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4); 
   text-align: center;
-  width: 90%; /* Responsive width */
+  width: 90%; 
 }
 
-/* Input Fields */
 input {
   border-radius: 5px;
-  border: 1px solid #444; /* Dark border */
+  border: 1px solid #444; 
   padding: 10px;
   margin: 10px 0;
-  width: 100%; /* Full width for inputs */
-  background: #292929; /* Dark field background */
-  color: #e0e0e0; /* Light text */
-  transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+  width: 100%; 
+  background: #292929; 
+  color: #e0e0e0; 
+  transition: border-color 0.3s ease, background-color 0.3s ease; 
 }
 
 input:hover {
-  border-color: #4caf50; /* Green border on hover */
-  background-color: #1f1f1f; /* Slightly lighter background on hover */
+  border-color: #4caf50;
+  background-color: #1f1f1f; 
 }
 
 input:focus {
   outline: none;
-  border-color: #2196f3; /* Blue border for active field */
+  border-color: #2196f3; 
 }
 
-/* Button Styling */
 button {
-  background-color: #4caf50; /* Green button background */
+  background-color: #4caf50; 
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -188,11 +173,11 @@ button {
 }
 
 button:hover {
-  background-color: #45a049; /* Darker green on hover */
-  transform: scale(1.05); /* Slight zoom effect */
+  background-color: #45a049; 
+  transform: scale(1.05); 
 }
 
 button:focus {
   outline: none;
-  border: 2px solid #2196f3; /* Blue border when focused */
+  border: 2px solid #2196f3; 
 }
