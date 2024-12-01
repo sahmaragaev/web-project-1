@@ -48,8 +48,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
             return true;
         })();
+    } else if (request.action === "getFormFields") {
+        const formFields = getFormFields();
+        sendResponse({ success: true, data: formFields });
+        return true;
+    } else if (request.action === "fillFormWithData") {
+        fillFormWithData(request.filledData);
+        sendResponse({ success: true });
+        return true;
+    } else if (request.action === "fillFormWithMappings") {
+        fillFormWithMappings(request.mappings, request.userData);
+        sendResponse({ success: true });
+        return true;
     }
-    
+
     return false;
 });
 
@@ -119,4 +131,56 @@ async function extractData(request, sendResponse) {
             });
         }
     })();
+}
+
+function getFormFields() {
+    const formElements = document.querySelectorAll("input, textarea, select");
+    const formFields = [];
+
+    formElements.forEach(element => {
+        const name = element.name || element.id || '';
+        if (name) {
+            formFields.push({
+                tagName: element.tagName.toLowerCase(),
+                type: element.type,
+                name: name,
+                label: getLabelText(element),
+            });
+        }
+    });
+
+    return formFields;
+}
+
+function getLabelText(element) {
+    let label = '';
+    if (element.labels && element.labels.length > 0) {
+        label = element.labels[0].innerText;
+    }
+    return label.trim();
+}
+
+function fillFormWithData(filledData) {
+    for (let formFieldName in filledData) {
+        const value = filledData[formFieldName];
+        const field = document.querySelector(`[name="${formFieldName}"]`);
+        if (field) {
+            field.value = value;
+            const event = new Event('input', { bubbles: true });
+            field.dispatchEvent(event);
+        }
+    }
+}
+
+function fillFormWithMappings(mappings, userData) {
+    for (let formFieldName in mappings) {
+        const userDataKey = mappings[formFieldName];
+        const value = userData[userDataKey];
+        const field = document.querySelector(`[name="${formFieldName}"]`);
+        if (field) {
+            field.value = value;
+            const event = new Event('input', { bubbles: true });
+            field.dispatchEvent(event);
+        }
+    }
 }

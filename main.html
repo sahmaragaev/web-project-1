@@ -1,99 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Profile Manager Tool" />
-    <title>Profile Manager</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Profile Manager Tool" />
+  <title>Profile Manager</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+<body class="bg-light">
+  <div
+    id="profile-data"
+    class="container mt-5 p-4 bg-white shadow-sm rounded"
+  >
+    <h2 class="text-center text-primary mb-4">Profile Manager</h2>
+    <form>
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="usernameInput"
+          placeholder="Enter Username (required)"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <textarea
+          class="form-control"
+          id="jsonData"
+          placeholder="Enter JSON Data"
+          rows="6"
+        ></textarea>
+      </div>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-  </head>
-  <body class="bg-light">
-    <div
-      id="profile-data"
-      class="container mt-5 p-4 bg-white shadow-sm rounded"
-    >
-      <h2 class="text-center text-primary mb-4">Profile Manager</h2>
-      <form>
-        <div class="mb-3">
-          <input
-            type="text"
-            class="form-control"
-            id="usernameInput"
-            placeholder="Enter Username (required)"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <textarea
-            class="form-control"
-            id="jsonData"
-            placeholder="Enter JSON Data"
-            rows="6"
-          ></textarea>
-        </div>
+      <div class="d-flex justify-content-center mb-2">
+        <button
+          type="button"
+          id="scrapeButton"
+          class="btn btn-icon btn-blue"
+          title="Scrape LinkedIn Data"
+        >
+          <i class="fas fa-search"></i>
+        </button>
+        <button
+          type="button"
+          id="saveButton"
+          class="btn btn-icon btn-blue"
+          title="Save Profile"
+        >
+          <i class="fas fa-save"></i>
+        </button>
+        <button
+          type="button"
+          id="loadButton"
+          class="btn btn-icon btn-blue"
+          title="Load Profile"
+        >
+          <i class="fas fa-folder-open"></i>
+        </button>
+        <button
+          type="button"
+          id="clearButton"
+          class="btn btn-icon btn-red"
+          title="Clear Profile"
+        >
+          <i class="fas fa-trash"></i>
+        </button>
+        <button
+          type="button"
+          id="exportDataButton"
+          class="btn btn-icon btn-green"
+          title="Export Data as JSON"
+        >
+          <i class="fas fa-file-export"></i>
+        </button>
+        <button
+          type="button"
+          id="exportMailButton"
+          class="btn btn-icon btn-green"
+          title="Export Data to Mail"
+        >
+          <i class="fas fa-envelope"></i>
+        </button>
+      </div>
 
-        <div class="d-flex justify-content-center mb-4">
-          <button
-            type="button"
-            id="scrapeButton"
-            class="btn btn-icon btn-blue"
-            title="Scrape LinkedIn Data"
-          >
-            <i class="fas fa-search"></i>
-          </button>
-          <button
-            type="button"
-            id="saveButton"
-            class="btn btn-icon btn-blue"
-            title="Save Profile"
-          >
-            <i class="fas fa-save"></i>
-          </button>
-          <button
-            type="button"
-            id="loadButton"
-            class="btn btn-icon btn-blue"
-            title="Load Profile"
-          >
-            <i class="fas fa-folder-open"></i>
-          </button>
-          <button
-            type="button"
-            id="clearButton"
-            class="btn btn-icon btn-red"
-            title="Clear Profile"
-          >
-            <i class="fas fa-trash"></i>
-          </button>
-          <button
-            type="button"
-            id="exportDataButton"
-            class="btn btn-icon btn-green"
-            title="Export Data as JSON"
-          >
-            <i class="fas fa-file-export"></i>
-          </button>
-          <button
-            type="button"
-            id="exportMailButton"
-            class="btn btn-icon btn-green"
-            title="Export Data to Mail"
-          >
-            <i class="fas fa-envelope"></i>
-          </button>
-        </div>
-      </form>
-    </div>
+      <div class="d-flex justify-content-center mb-4">
+        <button
+          type="button"
+          id="fillButton"
+          class="btn btn-icon btn-purple"
+          title="Auto-fill Data"
+        >
+          <i class="fas fa-magic"></i>
+        </button>
+        <button
+          type="button"
+          id="managePresetsButton"
+          class="btn btn-icon btn-purple"
+          title="Manage Presets"
+        >
+          <i class="fas fa-list"></i> Presets
+        </button>
+        <button
+          type="button"
+          id="dashboardButton"
+          class="btn btn-icon btn-purple"
+          title="Dashboard"
+        >
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </button>
+      </div>
+    </form>
+  </div>
 
-    <script src="main.js"></script>
-  </body>
+  <div id="mapping-container" style="display: none;">
+    <h3>Field Mapping</h3>
+    <form id="mapping-form"></form>
+    <button id="applyMappingButton">Apply Mapping and Fill Form</button>
+  </div>
+
+  <div id="preset-management" style="display: none;">
+    <h3>Saved Presets</h3>
+    <ul id="presetList"></ul>
+    <button id="closePresetManagementButton">Close Presets</button>
+  </div>
+
+  <div id="dashboard-container" style="display: none;">
+    <h3>Application Dashboard</h3>
+    <table id="applicationTable" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Job Title</th>
+          <th>Date Applied</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="closeDashboardButton">Close Dashboard</button>
+  </div>
+
+  <script src="main.js"></script>
+</body>
 </html>
