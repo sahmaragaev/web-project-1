@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const applyMappingButton = document.getElementById("applyMappingButton");
     const dashboardContainer = document.getElementById("dashboard-container");
     const closeDashboardButton = document.getElementById("closeDashboardButton");
+    const generateCoverLetterButton = document.getElementById("generateCoverLetterButton");
 
     scrapeButton.addEventListener("click", function () {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -43,6 +44,43 @@ document.addEventListener("DOMContentLoaded", function () {
                         ...extractedData,
                     };
                     jsonDataInput.value = JSON.stringify(jsonData, null, 2);
+                }
+            );
+        });
+    });
+
+    generateCoverLetterButton.addEventListener("click", function () {   
+        const companyName = prompt("Enter the Company Name:", "");
+        const jobTitle = prompt("Enter the Job Title:", "");
+
+        const jsonData = jsonDataInput.value.trim();
+        if (!jsonData) {
+            alert("Please ensure you have some data loaded.");
+            return;
+        }
+
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            chrome.tabs.sendMessage(
+                tabs[0].id,
+                {
+                    action: "generateCoverLetter",
+                    data: jsonData,
+                    companyName: companyName,
+                    jobTitle: jobTitle
+                },
+                (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error(chrome.runtime.lastError.message);
+                        alert("Error: " + chrome.runtime.lastError.message);
+                        return;
+                    }
+                    if (response && response.success) {
+                        const generatedText = response.data;
+                        navigator.clipboard.writeText(generatedText);
+                        alert("Generated Cover Letter:\n\n" + generatedText);
+                    } else {
+                        alert("Error generating cover letter: " + (response.error || "Unknown error"));
+                    }
                 }
             );
         });

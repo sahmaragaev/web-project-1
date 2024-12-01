@@ -4,50 +4,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true;
     }
     else if (request.action === "generateCoverLetter") {
-        (async () => {
-            try {
-                const prompt = `According to this user data: ${request.data}, write a cover letter please`;
-
-                const payload = JSON.stringify({
-                    contents: [
-                        {
-                            parts: [
-                                { text: prompt }
-                            ]
-                        }
-                    ]
-                });
-
-                const response = await fetch(
-                    // You should put your API key here :)
-                    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY",
-                    {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: payload
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
-                }
-
-                const data = await response.json();
-
-                const generatedText = data?.contents?.[0]?.parts?.[0]?.text;
-
-                sendResponse({ success: true, data: generatedText });
-            } catch (error) {
-                console.error("Error generating cover letter:", error);
-                sendResponse({
-                    success: false,
-                    error: error.message || "There was an issue on the server"
-                });
-            }
-            return true;
-        })();
+        generateCoverLetter(request, sendResponse);
+        return true;
     } else if (request.action === "getFormFields") {
         const formFields = getFormFields();
         sendResponse({ success: true, data: formFields });
@@ -64,6 +22,54 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
     return false;
 });
+
+async function generateCoverLetter(request, sendResponse) {
+    (async () => {
+        try {
+            const prompt = `According to this user data: ${request.data}, company name: ${request.companyName}, job title: ${request.jobTitle}, write a cover letter please`;
+
+            const payload = JSON.stringify({
+                contents: [
+                    {
+                        parts: [
+                            { text: prompt }
+                        ]
+                    }
+                ]
+            });
+
+            const response = await fetch(
+                // You should put your API key here :)
+                "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=API_KEY",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: payload
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            const generatedText = String(data.candidates[0].content.parts[0].text).trim();
+
+            console.log("Generated Text:", generatedText);
+            sendResponse({ success: true, data: generatedText });
+        } catch (error) {
+            console.error("Error generating cover letter:", error);
+            sendResponse({
+                success: false,
+                error: error.message || "There was an issue on the server"
+            });
+        }
+        return true;
+    })();
+}
 
 async function extractData(request, sendResponse) {
     (async () => {
