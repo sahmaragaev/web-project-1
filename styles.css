@@ -1,93 +1,194 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body,
+h1,
+h2,
+p,
+ul,
+li,
+a,
+button {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+h2 {
+  color: #e0e0e0;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+h2:hover {
+  color: #4caf50;
+}
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+#profile-data {
+  max-width: 600px;
+  padding: 20px;
+  background: url("https://img.freepik.com/premium-photo/pastel-tone-black-green-purple-gradient-defocused-abstract-photo-color-background_640734-12.jpg?w=900")
+    no-repeat center center;
+  background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+  margin: 20px auto;
+  position: relative;
+  color: white;
+}
+
+#profile-data::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  z-index: 0;
+}
+
+#profile-data * {
+  position: relative;
+  z-index: 1;
+
+  input.fields,
+  textarea {
+    border-radius: 5px;
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    background: #1c1c1c;
+    color: #e0e0e0;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
   }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
+
+  input.fields:hover,
+  textarea:hover {
+    border-color: #4caf50;
+    background-color: #292929;
   }
-  
-  div {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(38, 28, 226, 0.69);
+
+  input.fields:valid,
+  textarea:valid {
+    border-color: #4caf50;
+  }
+
+  input.fields:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #2196f3;
+  }
+
+  .btn-icon {
+    border: none;
+    font-size: 1.5em;
+    margin: 0 10px;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .btn-icon i {
+    filter: invert(100%);
+  }
+
+  .btn-icon:hover {
+    background-color: #292929;
+    color: #4caf50;
+    transform: scale(1.1);
+  }
+
+  .btn-icon[title]::after {
+    content: attr(title);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 0.65em;
+    padding: 4px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .btn-icon:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-3px);
+  }
+
+  .d-flex {
+    margin-bottom: 30px;
+  }
+
+  #log-in {
     max-width: 400px;
-    width: 100%;
-  }
-  div :hover{
-    box-shadow: 0 5px 7px rgba(38, 28, 226, 0.69);
-  }
-  
-  div h2 {
+    padding: 20px;
+    background: #1c1c1c;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
     text-align: center;
-    color: #007bff;
-    margin-bottom: 20px;
+    width: 90%;
   }
 
-
-
-  /* Input Fields */
-  div input,
-  div textarea {
-    width: 100%;
+  input {
+    border-radius: 5px;
+    border: 1px solid #444;
     padding: 10px;
     margin: 10px 0;
-    font-size: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  div textarea {
-    resize: vertical;
-    height: 80px;
-  }
-  
-  /* Buttons */
-  div button {
-    display: inline-block;
     width: 100%;
-    padding: 10px;
-    margin: 3px 0;
-    font-size: 1rem;
-    background: #6cbcca;
-    color: #000000;
+    background: #292929;
+    color: #e0e0e0;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+
+  input:hover {
+    border-color: #4caf50;
+    background-color: #1f1f1f;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #aaaaaa; /* White color for placeholders */
+    opacity: 1; /* Ensures the placeholder text is fully visible */
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #2196f3;
+  }
+
+  button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 1em;
+    transition: transform 0.3s ease, background-color 0.3s ease;
   }
-  
-  div button:hover {
-    background: #1f5962;
-    color: #fff;
+
+  button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
   }
-  
-  /* Export and Send Data Buttons */
-  #profile-data button#exportDataButton,
-  #profile-data button#sendDataButton {
-    background: #57b5c6;
+
+  button:focus {
+    outline: none;
+    border: 2px solid #2196f3;
   }
-  
-  #profile-data button#exportDataButton:hover,
-  #profile-data button#sendDataButton:hover {
-    background: #1e7a33;
-  }
-  
-  /* Clear Button */
-  #profile-data button#clearButton {
-    background: #dc3545;
-  }
-  
-  #profile-data button#clearButton:hover {
-    background: #ff001a;
-  }
-  
+}

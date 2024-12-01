@@ -5,7 +5,7 @@ chrome.action.onClicked.addListener((tab) => {
             files: ['content.js'],
         },
         function: () => {
-            chrome.runtime.sendMessage({ action: "extractData" }, (response) => {
+            chrome.runtime.sendMessage({ action: "extractData", username: 'sahmaragaev' }, (response) => {
                 if (response.success) {
                     console.log('Data extracted:', response.data);
                 } else {

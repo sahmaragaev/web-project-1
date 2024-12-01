@@ -4,29 +4,34 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body>
-    <div id="profile-data">
-      <h2>Profile Manager</h2>
-
-      <input
-        type="text"
-        class="fields"
-        id="usernameInput"
-        placeholder="Enter Username (required)"
-      />
-      <input type="text" id="name" placeholder="Name" />
-      <input type="text" id="jobTitle" placeholder="Job Title" />
-      <textarea id="education" placeholder="Education"></textarea>
-      <textarea id="skills" placeholder="Skills"></textarea>
-      <textarea id="experiences" placeholder="Experiences"></textarea>
-      <button id="scrapeButton">Scrape LinkedIn Data</button>
-      <button id="saveButton">Save Profile</button>
-      <button id="loadButton">Load Profile</button>
-      <button id="generateCoverLetterButton">Generate Cover Letter</button>
-      <button id="clearButton">Clear Profile</button>
-      <br />
-      <button id="exportDataButton">Export Data as JSON</button>
-      <button id="sendDataButton">Send Data via Email</button>
+    <div id="log-in">
+      <h2>Log in to your profile</h2>
+      <input type="text" id="username" placeholder="Enter Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="log-in-button">Log in</button>
+      <button id="already-logged-in">Already logged in?</button>
     </div>
+    <!-- <script>
+      async function checkAuth() {
+        try {
+          const response = await fetch("http://localhost:3000/api/auth-status");
+
+          if (response.ok) {
+            const result = await response.json();
+
+            if (result.authenticated) {
+              window.location.href = "main.html";
+            }
+          } else {
+            console.log("Not authenticated. Staying on the login page.");
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error.message);
+        }
+      }
+
+      window.addEventListener("DOMContentLoaded", checkAuth);
+    </script> -->
     <script src="popup.js"></script>
   </body>
 </html>

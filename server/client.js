@@ -34,6 +34,7 @@ class LinkedInClient {
       this.csrfToken = cookieData.csrfToken;
       return true;
     }
+    
     return false;
   }
 
@@ -108,13 +109,6 @@ class LinkedInClient {
     await this._saveCookies(parsedCookies.cookies, parsedCookies.csrfToken);
   }
 
-  async ensureAuthenticated() {
-    if (!(await this._loadCookies())) {
-      console.log("No cookies found. Logging in...");
-      await this._login();
-    }
-  }
-
   async _fetch(endpoint) {
     await this.ensureAuthenticated();
 
@@ -132,6 +126,13 @@ class LinkedInClient {
     }
 
     return await response.json();
+  }
+
+  async ensureAuthenticated() {
+    if (!(await this._loadCookies())) {
+      console.log("No cookies found. Logging in...");
+      await this._login();
+    }
   }
 
   async getProfile(publicId) {
