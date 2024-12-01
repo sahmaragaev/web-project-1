@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const dashboardContainer = document.getElementById("dashboard-container");
     const closeDashboardButton = document.getElementById("closeDashboardButton");
     const generateCoverLetterButton = document.getElementById("generateCoverLetterButton");
+    const importDataButton = document.getElementById("importDataButton");
 
     scrapeButton.addEventListener("click", function () {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -153,6 +154,36 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    importDataButton.addEventListener("click", function () {
+        const fileInput = document.createElement("input");
+        fileInput.type = "file";
+        fileInput.accept = ".json";
+        fileInput.style.display = "none";
+        fileInput.onchange = function (event) {
+            const file = event.target.files[0];
+            if (!file) {
+                alert("No file selected.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function (event) {
+                const jsonData = event.target.result;
+                try {
+                    const parsedData = JSON.parse(jsonData);
+                    chrome.storage.local.set(parsedData, () => {
+                        alert("Data imported successfully!");
+                    });
+                } catch (error) {
+                    alert("Invalid JSON data. Please correct it.");
+                }
+            };
+            reader.readAsText(file);
+        };
+        document.body.appendChild(fileInput);
+        fileInput.click();
+        document.body.removeChild(fileInput);
+    });
+    
     exportToMailButton.addEventListener("click", function () {
         chrome.storage.local.get(null, (data) => {
             if (data) {
